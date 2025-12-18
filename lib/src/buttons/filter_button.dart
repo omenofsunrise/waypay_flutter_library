@@ -10,12 +10,14 @@ class FilterButton extends StatefulWidget {
     required this.onTap,
     required this.isActive,
     this.iconAsset = SvgIcons.filter,
+    this.iconPackage = 'waypay_styles',
     this.activeIconColor,
   });
 
   final Future<void> Function() onTap;
   final bool isActive;
   final String iconAsset;
+  final String? iconPackage;
   final Color? activeIconColor;
 
   @override
@@ -53,10 +55,11 @@ class _FilterButtonState extends State<FilterButton> {
           borderRadius: BorderRadius.circular(12),
           onTap: _openFilters,
           child: Center(
-            child: SvgPicture.asset(
-              widget.iconAsset,
-              colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
-            ),
+                  child: SvgPicture.asset(
+                    widget.iconAsset,
+                    package: widget.iconPackage,
+                    colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                  ),
           ),
         ),
       ),

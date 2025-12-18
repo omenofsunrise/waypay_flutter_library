@@ -61,7 +61,10 @@ class Header extends StatelessWidget {
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: Padding(
                         padding: const EdgeInsets.all(6),
-                        child: SvgPicture.asset(SvgIcons.chevronLeft),
+                        child: SvgPicture.asset(
+                          SvgIcons.chevronLeft,
+                          package: 'waypay_styles',
+                        ),
                       ),
                     ),
                   ),
@@ -88,7 +91,10 @@ class Header extends StatelessWidget {
             notificationsButton ??
                 IconButton(
                   onPressed: () {},
-                  icon: SvgPicture.asset(SvgIcons.notifications),
+                  icon: SvgPicture.asset(
+                    SvgIcons.notifications,
+                    package: 'waypay_styles',
+                  ),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                 ),
