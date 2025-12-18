@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:waypay_styles/assets/resources.dart';
 
-import 'app_colors.dart';
+import '../theme/app_colors.dart';
 
 class FilterButton extends StatefulWidget {
   const FilterButton({

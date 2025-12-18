@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../assets/resources.dart';
-import 'app_colors.dart';
-import 'app_style.dart';
+import 'package:waypay_styles/assets/resources.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_style.dart';
 
 class SearchField extends StatelessWidget {
   final TextEditingController? controller;
