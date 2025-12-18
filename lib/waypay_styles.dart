@@ -6,6 +6,7 @@ export 'src/theme/app_style.dart';
 export 'src/buttons/add_button.dart';
 export 'src/buttons/default_button.dart';
 export 'src/buttons/filter_button.dart';
+export 'src/buttons/more_details_button.dart';
 
 export 'src/inputs/custom_checkbox.dart';
 export 'src/inputs/custom_radio_button.dart';
