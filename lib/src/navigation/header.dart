@@ -67,11 +67,8 @@ class Header extends StatelessWidget {
                   ),
                 )
               : showAvatar
-                  ? GestureDetector(
-                      onTap: () {},
-                      child: _buildAvatar(),
-                    )
-                  : const SizedBox(width: 10),
+              ? GestureDetector(onTap: () {}, child: _buildAvatar())
+              : const SizedBox(width: 10),
           const SizedBox(width: 12),
           Expanded(
             child: KeyedSubtree(
@@ -91,20 +88,13 @@ class Header extends StatelessWidget {
             notificationsButton ??
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(
-                    Icons.notifications_none,
-                    size: 26,
-                    color: Color(AppColors.primary),
-                  ),
+                  icon: SvgPicture.asset(SvgIcons.notifications),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                 ),
             const SizedBox(width: 3),
           ],
-          if (trailing != null) ...[
-            const SizedBox(width: 12),
-            trailing!,
-          ],
+          if (trailing != null) ...[const SizedBox(width: 12), trailing!],
         ],
       ),
     );
