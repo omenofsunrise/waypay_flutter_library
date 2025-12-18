@@ -14,3 +14,5 @@ export 'src/inputs/toggle_switch.dart';
 export 'src/inputs/custom_calendar.dart';
 export 'src/inputs/date_input.dart';
 export 'src/inputs/search_field.dart';
+export 'src/inputs/modal_text_field.dart';
+export 'src/inputs/custom_input.dart';
