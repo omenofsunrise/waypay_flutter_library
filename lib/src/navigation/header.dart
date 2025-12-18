@@ -17,6 +17,12 @@ class Header extends StatelessWidget {
   final GlobalKey? titleKey;
   final bool showAvatar;
   final Widget? notificationsButton;
+  final String backIconAsset;
+  final String notificationsIconAsset;
+  final String? iconPackage;
+  final String fallbackRoute;
+  final VoidCallback? onAvatarTap;
+  final String? avatarRouteName;
 
   const Header({
     super.key,
@@ -30,6 +36,12 @@ class Header extends StatelessWidget {
     this.titleKey,
     this.showAvatar = true,
     this.notificationsButton,
+    this.backIconAsset = SvgIcons.chevronLeft,
+    this.notificationsIconAsset = SvgIcons.notifications,
+    this.iconPackage = 'waypay_styles',
+    this.fallbackRoute = '/',
+    this.onAvatarTap,
+    this.avatarRouteName,
   });
 
   @override
@@ -52,7 +64,7 @@ class Header extends StatelessWidget {
                       if (context.canPop()) {
                         context.pop();
                       } else {
-                        context.go('/');
+                        context.go(fallbackRoute);
                       }
                     },
                     child: Container(
@@ -62,15 +74,26 @@ class Header extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(6),
                         child: SvgPicture.asset(
-                          SvgIcons.chevronLeft,
-                          package: 'waypay_styles',
+                          backIconAsset,
+                          package: iconPackage,
                         ),
                       ),
                     ),
                   ),
                 )
               : showAvatar
-              ? GestureDetector(onTap: () {}, child: _buildAvatar())
+              ? GestureDetector(
+                  onTap: () {
+                    if (onAvatarTap != null) {
+                      onAvatarTap!();
+                      return;
+                    }
+                    if (avatarRouteName != null) {
+                      context.pushNamed(avatarRouteName!);
+                    }
+                  },
+                  child: _buildAvatar(),
+                )
               : const SizedBox(width: 10),
           const SizedBox(width: 12),
           Expanded(
