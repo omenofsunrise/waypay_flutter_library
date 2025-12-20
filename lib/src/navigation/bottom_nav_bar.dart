@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:waypay_styles/waypay_styles.dart';
 
-class WaypayBottomNavItem {
-  const WaypayBottomNavItem({required this.icon, this.activeIcon});
+class BottomNavItem {
+  const BottomNavItem({required this.icon, this.activeIcon});
 
   final String icon;
   final String? activeIcon;
 }
 
-class WaypayBottomNavBar extends StatelessWidget {
-  const WaypayBottomNavBar({
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({
     super.key,
     required this.items,
     required this.currentIndex,
@@ -25,7 +25,7 @@ class WaypayBottomNavBar extends StatelessWidget {
     this.borderRadius = const BorderRadius.vertical(top: Radius.circular(16)),
   });
 
-  final List<WaypayBottomNavItem> items;
+  final List<BottomNavItem> items;
   final int currentIndex;
   final ValueChanged<int> onTap;
   final Color backgroundColor;
