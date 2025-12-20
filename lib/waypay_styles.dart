@@ -18,3 +18,13 @@ export 'src/inputs/modal_text_field.dart';
 export 'src/inputs/custom_input.dart';
 export 'src/navigation/custom_tab_switcher.dart';
 export 'src/navigation/header.dart';
+export 'src/navigation/bottom_nav_bar.dart';
+
+export 'src/auth/models.dart';
+export 'src/auth/call_auth_client.dart';
+export 'src/auth/call_auth_repository.dart';
+export 'src/auth/bloc/call_auth_cubit.dart';
+export 'src/auth/widgets/call_confirmation_dialog.dart';
+export 'src/auth/screens/phone_auth_screen.dart';
+export 'src/auth/screens/confirmation_screen.dart';
+export 'src/auth/screens/pin_code_screen.dart';
