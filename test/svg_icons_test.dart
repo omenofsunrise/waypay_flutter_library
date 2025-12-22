@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:waypay_styles/assets/resources.dart';
+import 'package:waypay_flutter_library/assets/resources.dart';
 
 void main() {
   test('svg_icons assets test', () {
