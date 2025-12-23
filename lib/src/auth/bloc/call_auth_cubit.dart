@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 import '../call_auth_repository.dart';
 import '../models.dart';
@@ -44,10 +41,7 @@ class CallAuthCubit extends Cubit<CallAuthState> {
       super(const CallAuthInitial());
 
   final CallAuthRepository _repository;
-
-  Timer? _pollingTimer;
-  static const _pollingInterval = Duration(seconds: 1);
-  static const _pollingTimeout = Duration(seconds: 60);
+  bool _isConfirming = false;
 
   Future<void> startAuth({
     required String phone,
@@ -60,56 +54,33 @@ class CallAuthCubit extends Cubit<CallAuthState> {
         userType: userType,
       );
       emit(CallAuthCodeSent(initResponse, phone));
-
-      _startPolling(
-        checkId: initResponse.checkId,
-        phone: phone,
-        userType: userType,
-      );
     } catch (e) {
       emit(CallAuthError(e.toString()));
     }
   }
 
-  void _startPolling({
+  Future<void> tryConfirm({
     required String checkId,
     required String phone,
     required String userType,
-  }) {
-    _pollingTimer?.cancel();
-    final startedAt = DateTime.now();
+  }) async {
+    if (_isConfirming) return;
 
-    _pollingTimer = Timer.periodic(_pollingInterval, (_) async {
-      if (DateTime.now().difference(startedAt) > _pollingTimeout) {
-        _stopPolling();
-        emit(const CallAuthError('Время ожидания истекло'));
-        return;
+    _isConfirming = true;
+    try {
+      final response = await _repository.confirm(
+        checkId: checkId,
+        phone: phone,
+        userType: userType,
+      );
+
+      if (response.isConfirmed) {
+        emit(CallAuthSuccess(response, phone));
       }
-
-      try {
-        final response = await _repository.confirm(
-          checkId: checkId,
-          phone: phone,
-          userType: userType,
-        );
-        if (response.isConfirmed) {
-          emit(CallAuthSuccess(response, phone));
-        }
-      } catch (e) {
-        _stopPolling();
-        emit(CallAuthError(e.toString()));
-      }
-    });
-  }
-
-  void _stopPolling() {
-    _pollingTimer?.cancel();
-    _pollingTimer = null;
-  }
-
-  @override
-  Future<void> close() {
-    _stopPolling();
-    return super.close();
+    } catch (e) {
+      emit(CallAuthError(e.toString()));
+    } finally {
+      _isConfirming = false;
+    }
   }
 }

@@ -95,6 +95,11 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                     callPhone: state.initResponse.callPhone,
                     checkId: state.initResponse.checkId,
                     phone: state.phone,
+                    onTryConfirm: () => context.read<CallAuthCubit>().tryConfirm(
+                      checkId: state.initResponse.checkId,
+                      phone: state.phone,
+                      userType: widget.userType,
+                    ),
                   ),
                 ).then((_) => _isDialogShowing = false);
               });
@@ -165,9 +170,11 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                               
                                 widget.title,
-                                style: AppStyle.manrope(size: 22, weight: FontWeight.w500)
+                                style: AppStyle.manrope(
+                                  size: 22,
+                                  weight: FontWeight.w500,
+                                ),
                               ),
                               const SizedBox(height: 20),
                               TextFormField(

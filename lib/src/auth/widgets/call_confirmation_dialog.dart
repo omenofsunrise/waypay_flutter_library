@@ -14,55 +14,87 @@ class CallConfirmationDialog extends StatefulWidget {
     required this.callPhone,
     required this.checkId,
     required this.phone,
+    required this.onTryConfirm,
   });
 
-  final String callPhone;
-  final String checkId;
-  final String phone;
-  final Future<void> Function() onTryConfirm;
+  @override
+  State<CallConfirmationDialog> createState() => _CallConfirmationDialogState();
+}
+
+class _CallConfirmationDialogState extends State<CallConfirmationDialog> {
+  Timer? _timer;
+  bool _isChecking = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoCheck();
+  }
+
+  void _startAutoCheck() {
+    _timer = Timer.periodic(const Duration(seconds: 2), (_) async {
+      if (_isChecking) return;
+
+      try {
+        setState(() => _isChecking = true);
+        await widget.onTryConfirm();
+      } finally {
+        if (mounted) {
+          setState(() => _isChecking = false);
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Color(AppColors.background),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      contentPadding: const EdgeInsets.all(20),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.call, color: Color(AppColors.primary), size: 40),
-          const SizedBox(height: 12),
-          Text(
-            'Подтверждение звонком',
-            style: AppStyle.medium20.copyWith(
-              color: const Color(AppColors.black),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Подтверждение авторизации',
+              style: AppStyle.semiBold20,
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Мы позвонили на номер $callPhone\n(чек: $checkId).\n'
-            'Если звонок получен, нажмите «Подтвердить».',
-            style: AppStyle.regular14.copyWith(
-              color: const Color(AppColors.black),
+            const SizedBox(height: 16),
+            Text(
+              'Для завершения авторизации позвоните на номер:',
+              style: AppStyle.medium16.copyWith(
+                color: const Color(AppColors.grey),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          DefaultButton(
-            text: 'Подтвердить',
-            isPrimary: true,
-            onPressed: () async {
-              await onTryConfirm();
-            },
-          ),
-          const SizedBox(height: 8),
-          DefaultButton(
-            text: 'Отмена',
-            isPrimary: false,
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
+            const SizedBox(height: 16),
+            Text(
+              widget.callPhone,
+              style: AppStyle.inter(
+                size: 20,
+                weight: FontWeight.w700,
+                color: const Color(AppColors.primary),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'После звонка проверка будет происходить автоматически.',
+              style: AppStyle.medium16.copyWith(
+                color: const Color(AppColors.grey),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
