@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/waypay_styles.iml" filepath="$PROJECT_DIR$/waypay_styles.iml" />
+      <module fileurl="file://$PROJECT_DIR$/waypay_flutter_library.iml" filepath="$PROJECT_DIR$/waypay_flutter_library.iml" />
     </modules>
   </component>
 </project>

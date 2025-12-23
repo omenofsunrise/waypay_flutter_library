@@ -1,4 +1,4 @@
-library waypay_styles;
+library waypay_flutter_library;
 
 export 'src/theme/app_colors.dart';
 export 'src/theme/app_style.dart';

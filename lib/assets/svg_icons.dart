@@ -3,7 +3,7 @@ part of 'resources.dart';
 class SvgIcons {
   SvgIcons._();
 
-  static const _basePath = 'packages/waypay_styles/assets/icons/';
+  static const _basePath = 'packages/waypay_flutter_library/assets/icons/';
 
   static const String add = '${_basePath}add.svg';
   static const String addFile = '${_basePath}add_file.svg';

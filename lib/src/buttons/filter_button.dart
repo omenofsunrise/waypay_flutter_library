@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:waypay_styles/assets/resources.dart';
+import 'package:waypay_flutter_library/assets/resources.dart';
 
 import '../theme/app_colors.dart';
 
@@ -10,7 +10,7 @@ class FilterButton extends StatefulWidget {
     required this.onTap,
     required this.isActive,
     this.iconAsset = SvgIcons.filter,
-    this.iconPackage = 'waypay_styles',
+    this.iconPackage = 'waypay_flutter_library',
     this.activeIconColor,
   });
 
@@ -55,11 +55,11 @@ class _FilterButtonState extends State<FilterButton> {
           borderRadius: BorderRadius.circular(12),
           onTap: _openFilters,
           child: Center(
-                  child: SvgPicture.asset(
-                    widget.iconAsset,
-                    package: widget.iconPackage,
-                    colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
-                  ),
+            child: SvgPicture.asset(
+              widget.iconAsset,
+              package: widget.iconPackage,
+              colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+            ),
           ),
         ),
       ),

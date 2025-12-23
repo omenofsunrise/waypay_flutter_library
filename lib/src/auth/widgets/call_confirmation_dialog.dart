@@ -1,7 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:waypay_styles/waypay_styles.dart';
+import 'dart:async';
 
-class CallConfirmationDialog extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:waypay_flutter_library/waypay_styles.dart';
+
+class CallConfirmationDialog extends StatefulWidget {
+  final String callPhone;
+  final String checkId;
+  final String phone;
+  final Future<void> Function() onTryConfirm;
+
   const CallConfirmationDialog({
     super.key,
     required this.callPhone,
@@ -12,32 +19,48 @@ class CallConfirmationDialog extends StatelessWidget {
   final String callPhone;
   final String checkId;
   final String phone;
+  final Future<void> Function() onTryConfirm;
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return Dialog(
+      backgroundColor: Color(AppColors.background),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       contentPadding: const EdgeInsets.all(20),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Подтверждение\nавторизации', style: AppStyle.medium20.copyWith(height: 1.2), textAlign: TextAlign.center,),
+          const Icon(Icons.call, color: Color(AppColors.primary), size: 40),
+          const SizedBox(height: 12),
+          Text(
+            'Подтверждение звонком',
+            style: AppStyle.medium20.copyWith(
+              color: const Color(AppColors.black),
+            ),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 10),
           Text(
-            'Для завершения авторизации позвоните на номер:',
-            style: AppStyle.regular14,
+            'Мы позвонили на номер $callPhone\n(чек: $checkId).\n'
+            'Если звонок получен, нажмите «Подтвердить».',
+            style: AppStyle.regular14.copyWith(
+              color: const Color(AppColors.black),
+            ),
             textAlign: TextAlign.center,
           ),
-           SizedBox(height: 10),
-          Text(
-            '8(499) 555-5555',
-            style: TextStyle(fontSize: 30, color: Color(AppColors.primary)),
+          const SizedBox(height: 16),
+          DefaultButton(
+            text: 'Подтвердить',
+            isPrimary: true,
+            onPressed: () async {
+              await onTryConfirm();
+            },
           ),
-          SizedBox(height: 10),
-          Text(
-            'После звонка проверка будет проходить автоматически',
-            textAlign: TextAlign.center,
-            style: AppStyle.regular14,
+          const SizedBox(height: 8),
+          DefaultButton(
+            text: 'Отмена',
+            isPrimary: false,
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ],
       ),
