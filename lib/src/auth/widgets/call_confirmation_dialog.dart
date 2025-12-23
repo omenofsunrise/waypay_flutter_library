@@ -7,13 +7,11 @@ class CallConfirmationDialog extends StatelessWidget {
     required this.callPhone,
     required this.checkId,
     required this.phone,
-    required this.onTryConfirm,
   });
 
   final String callPhone;
   final String checkId;
   final String phone;
-  final Future<void> Function() onTryConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -23,37 +21,23 @@ class CallConfirmationDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.call, color: Color(AppColors.primary), size: 40),
-          const SizedBox(height: 12),
-          Text(
-            'Подтверждение звонком',
-            style: AppStyle.medium20.copyWith(
-              color: const Color(AppColors.black),
-            ),
-            textAlign: TextAlign.center,
-          ),
+          Text('Подтверждение\nавторизации', style: AppStyle.medium20.copyWith(height: 1.2), textAlign: TextAlign.center,),
           const SizedBox(height: 10),
           Text(
-            'Мы позвонили на номер $callPhone\n(чек: $checkId).\n'
-            'Если звонок получен, нажмите «Подтвердить».',
-            style: AppStyle.regular14.copyWith(
-              color: const Color(AppColors.black),
-            ),
+            'Для завершения авторизации позвоните на номер:',
+            style: AppStyle.regular14,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
-          DefaultButton(
-            text: 'Подтвердить',
-            isPrimary: true,
-            onPressed: () async {
-              await onTryConfirm();
-            },
+           SizedBox(height: 10),
+          Text(
+            '8(499) 555-5555',
+            style: TextStyle(fontSize: 30, color: Color(AppColors.primary)),
           ),
-          const SizedBox(height: 8),
-          DefaultButton(
-            text: 'Отмена',
-            isPrimary: false,
-            onPressed: () => Navigator.of(context).pop(),
+          SizedBox(height: 10),
+          Text(
+            'После звонка проверка будет проходить автоматически',
+            textAlign: TextAlign.center,
+            style: AppStyle.regular14,
           ),
         ],
       ),

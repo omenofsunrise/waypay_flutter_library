@@ -95,12 +95,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                     callPhone: state.initResponse.callPhone,
                     checkId: state.initResponse.checkId,
                     phone: state.phone,
-                    onTryConfirm: () =>
-                        context.read<CallAuthCubit>().confirmCall(
-                          checkId: state.initResponse.checkId,
-                          phone: state.phone,
-                          userType: widget.userType,
-                        ),
                   ),
                 ).then((_) => _isDialogShowing = false);
               });
@@ -168,17 +162,14 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                         Form(
                           key: _formKey,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
+                               
                                 widget.title,
-                                style: AppStyle.manrope(
-                                  size: 24,
-                                  weight: FontWeight.w600,
-                                  color: const Color(AppColors.black),
-                                ),
+                                style: AppStyle.manrope(size: 22, weight: FontWeight.w500)
                               ),
-                              const SizedBox(height: 36),
+                              const SizedBox(height: 20),
                               TextFormField(
                                 controller: _phoneController,
                                 focusNode: _phoneFocus,

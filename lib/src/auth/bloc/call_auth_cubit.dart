@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 import '../call_auth_repository.dart';
 import '../models.dart';
@@ -36,12 +39,15 @@ class CallAuthError extends CallAuthState {
 }
 
 class CallAuthCubit extends Cubit<CallAuthState> {
-  CallAuthCubit({
-    required CallAuthRepository repository,
-  })  : _repository = repository,
-        super(const CallAuthInitial());
+  CallAuthCubit({required CallAuthRepository repository})
+    : _repository = repository,
+      super(const CallAuthInitial());
 
   final CallAuthRepository _repository;
+
+  Timer? _pollingTimer;
+  static const _pollingInterval = Duration(seconds: 1);
+  static const _pollingTimeout = Duration(seconds: 60);
 
   Future<void> startAuth({
     required String phone,
@@ -54,26 +60,56 @@ class CallAuthCubit extends Cubit<CallAuthState> {
         userType: userType,
       );
       emit(CallAuthCodeSent(initResponse, phone));
+
+      _startPolling(
+        checkId: initResponse.checkId,
+        phone: phone,
+        userType: userType,
+      );
     } catch (e) {
       emit(CallAuthError(e.toString()));
     }
   }
 
-  Future<void> confirmCall({
+  void _startPolling({
     required String checkId,
     required String phone,
     required String userType,
-  }) async {
-    emit(const CallAuthLoading());
-    try {
-      final response = await _repository.confirm(
-        checkId: checkId,
-        phone: phone,
-        userType: userType,
-      );
-      emit(CallAuthSuccess(response, phone));
-    } catch (e) {
-      emit(CallAuthError(e.toString()));
-    }
+  }) {
+    _pollingTimer?.cancel();
+    final startedAt = DateTime.now();
+
+    _pollingTimer = Timer.periodic(_pollingInterval, (_) async {
+      if (DateTime.now().difference(startedAt) > _pollingTimeout) {
+        _stopPolling();
+        emit(const CallAuthError('Время ожидания истекло'));
+        return;
+      }
+
+      try {
+        final response = await _repository.confirm(
+          checkId: checkId,
+          phone: phone,
+          userType: userType,
+        );
+        if (response.isConfirmed) {
+          emit(CallAuthSuccess(response, phone));
+        }
+      } catch (e) {
+        _stopPolling();
+        emit(CallAuthError(e.toString()));
+      }
+    });
+  }
+
+  void _stopPolling() {
+    _pollingTimer?.cancel();
+    _pollingTimer = null;
+  }
+
+  @override
+  Future<void> close() {
+    _stopPolling();
+    return super.close();
   }
 }

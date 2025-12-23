@@ -37,6 +37,9 @@ class CallAuthConfirmResponse {
           : null,
     );
   }
+
+  bool get isConfirmed => status == 'AUTH_CONFIRMED';
+  bool get isPending => status == 'AUTH_PENDING';
 }
 
 class AuthTokens {
