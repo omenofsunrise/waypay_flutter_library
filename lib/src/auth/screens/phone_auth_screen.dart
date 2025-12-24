@@ -95,11 +95,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                     callPhone: state.initResponse.callPhone,
                     checkId: state.initResponse.checkId,
                     phone: state.phone,
-                    onTryConfirm: () => context.read<CallAuthCubit>().tryConfirm(
-                      checkId: state.initResponse.checkId,
-                      phone: state.phone,
-                      userType: widget.userType,
-                    ),
                   ),
                 ).then((_) => _isDialogShowing = false);
               });
