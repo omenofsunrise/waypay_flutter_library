@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:waypay_styles/assets/resources.dart';
+import 'package:waypay_flutter_library/assets/resources.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_style.dart';
 
@@ -48,7 +48,7 @@ class SearchField extends StatelessWidget {
             SvgIcons.search,
             width: 18,
             height: 18,
-            package: 'waypay_styles',
+            package: 'waypay_flutter_library',
           ),
           const SizedBox(width: 12),
           Expanded(

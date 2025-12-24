@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waypay_styles/waypay_styles.dart';
+import 'package:waypay_flutter_library/waypay_styles.dart';
 
 class PinCodeScreen extends StatefulWidget {
   const PinCodeScreen({
@@ -228,10 +228,7 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
                 SizedBox(
                   height: widget.logoSize,
                   width: widget.logoSize,
-                  child: Image.asset(
-                    widget.logoAsset!,
-                    fit: BoxFit.contain,
-                  ),
+                  child: Image.asset(widget.logoAsset!, fit: BoxFit.contain),
                 ),
               if (widget.logoAsset != null) const SizedBox(height: 20),
               Text(

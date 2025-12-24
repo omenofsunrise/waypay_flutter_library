@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:waypay_styles/assets/resources.dart';
+import 'package:waypay_flutter_library/assets/resources.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_style.dart';
@@ -38,7 +38,7 @@ class Header extends StatelessWidget {
     this.notificationsButton,
     this.backIconAsset = SvgIcons.chevronLeft,
     this.notificationsIconAsset = SvgIcons.notifications,
-    this.iconPackage = 'waypay_styles',
+    this.iconPackage = 'waypay_flutter_library',
     this.fallbackRoute = '/',
     this.onAvatarTap,
     this.avatarRouteName,
@@ -116,7 +116,7 @@ class Header extends StatelessWidget {
                   onPressed: () {},
                   icon: SvgPicture.asset(
                     SvgIcons.notifications,
-                    package: 'waypay_styles',
+                    package: 'waypay_flutter_library',
                   ),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
