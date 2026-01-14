@@ -82,7 +82,7 @@ class CallAuthCubit extends Cubit<CallAuthState> {
     _pollingTimer = Timer.periodic(_pollingInterval, (_) async {
       if (DateTime.now().difference(startedAt) > _pollingTimeout) {
         _stopPolling();
-        emit(const CallAuthError('Время ожидания истекло'));
+        _safeEmit(const CallAuthError('Время ожидания истекло'));
         return;
       }
 
@@ -93,11 +93,12 @@ class CallAuthCubit extends Cubit<CallAuthState> {
           userType: userType,
         );
         if (response.isConfirmed) {
-          emit(CallAuthSuccess(response, phone));
+          _stopPolling();
+          _safeEmit(CallAuthSuccess(response, phone));
         }
       } catch (e) {
         _stopPolling();
-        emit(CallAuthError(e.toString()));
+        _safeEmit(CallAuthError(e.toString()));
       }
     });
   }
@@ -105,6 +106,11 @@ class CallAuthCubit extends Cubit<CallAuthState> {
   void _stopPolling() {
     _pollingTimer?.cancel();
     _pollingTimer = null;
+  }
+
+  void _safeEmit(CallAuthState state) {
+    if (isClosed) return;
+    emit(state);
   }
 
   @override
