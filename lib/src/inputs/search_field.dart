@@ -44,12 +44,7 @@ class SearchField extends StatelessWidget {
       child: Row(
         children: [
           const SizedBox(width: 16),
-          SvgPicture.asset(
-            SvgIcons.search,
-            width: 18,
-            height: 18,
-            package: 'waypay_flutter_library',
-          ),
+          SvgPicture.asset(SvgIcons.search, width: 18, height: 18),
           const SizedBox(width: 12),
           Expanded(
             child: TextField(

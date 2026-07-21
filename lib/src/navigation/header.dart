@@ -75,10 +75,7 @@ class Header extends StatelessWidget {
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: Padding(
                         padding: const EdgeInsets.all(6),
-                        child: SvgPicture.asset(
-                          backIconAsset,
-                          package: iconPackage,
-                        ),
+                        child: SvgPicture.asset(backIconAsset),
                       ),
                     ),
                   ),
@@ -118,10 +115,7 @@ class Header extends StatelessWidget {
             notificationsButton ??
                 IconButton(
                   onPressed: () {},
-                  icon: SvgPicture.asset(
-                    SvgIcons.notifications,
-                    package: 'waypay_flutter_library',
-                  ),
+                  icon: SvgPicture.asset(SvgIcons.notifications),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                 ),
