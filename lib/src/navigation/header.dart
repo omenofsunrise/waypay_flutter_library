@@ -8,6 +8,7 @@ import '../theme/app_style.dart';
 
 class Header extends StatelessWidget {
   final String title;
+  final Widget? titleWidget;
   final String? fullName;
   final String? photoPath;
   final bool showBackButton;
@@ -27,6 +28,7 @@ class Header extends StatelessWidget {
   const Header({
     super.key,
     this.title = 'Добро пожаловать!',
+    this.titleWidget,
     this.fullName,
     this.photoPath,
     this.showBackButton = false,
@@ -99,14 +101,16 @@ class Header extends StatelessWidget {
           Expanded(
             child: KeyedSubtree(
               key: titleKey,
-              child: Text(
-                title,
-                style: AppStyle.semiBold23.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              child:
+                  titleWidget ??
+                  Text(
+                    title,
+                    style: AppStyle.semiBold23.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
             ),
           ),
           if (showNotifications) ...[
