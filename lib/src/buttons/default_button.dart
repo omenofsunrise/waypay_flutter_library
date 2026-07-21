@@ -32,22 +32,25 @@ class DefaultButton extends StatefulWidget {
 class _DefaultButtonState extends State<DefaultButton> {
   @override
   Widget build(BuildContext context) {
-    final Color bg = widget.color ??
+    final Color bg =
+        widget.color ??
         (widget.isPrimary
             ? const Color(AppColors.primary)
             : const Color(AppColors.greyLight));
 
     final bool enabled = widget.onPressed != null;
     final bool isGrey = bg == const Color(AppColors.greyLight);
-    final Color fg = widget.textColor ??
+    final Color fg =
+        widget.textColor ??
         (isGrey ? Colors.black : const Color(AppColors.background));
 
-    final Widget iconWidget = widget.iconWidget ??
+    final Widget iconWidget =
+        widget.iconWidget ??
         (widget.icon != null
             ? Icon(widget.icon, color: fg, size: 20)
             : Icon(Icons.info, color: fg, size: 20));
 
-    final Color displayColor = enabled ? bg : bg.withOpacity(0.6);
+    final Color displayColor = enabled ? bg : bg.withValues(alpha: 0.6);
 
     return GestureDetector(
       onTap: enabled ? widget.onPressed : null,

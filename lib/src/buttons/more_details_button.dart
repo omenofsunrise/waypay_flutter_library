@@ -16,7 +16,7 @@ class MoreDetailsButton extends StatelessWidget {
     this.text = 'Подробнее',
     required this.onPressed,
     this.color = const Color(AppColors.primary),
-    this.padding = const EdgeInsets.all(8.0),
+    this.padding = const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
     this.textStyle,
     this.showArrow = true,
   });
@@ -29,29 +29,26 @@ class MoreDetailsButton extends StatelessWidget {
 
     return Align(
       alignment: Alignment.centerRight,
-      child: Padding(
-        padding: padding,
-        child: TextButton(
-          onPressed: onPressed,
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            foregroundColor: color,
-            shadowColor: Colors.transparent,
-            surfaceTintColor: Colors.transparent,
-            padding: EdgeInsets.zero,
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(text, style: labelStyle),
-              if (showArrow) ...[
-                const SizedBox(width: 4),
-                Icon(Icons.chevron_right, color: color, size: 14),
-              ],
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          foregroundColor: color,
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          padding: padding,
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(text, style: labelStyle),
+            if (showArrow) ...[
+              const SizedBox(width: 4),
+              Icon(Icons.chevron_right, color: color, size: 14),
             ],
-          ),
+          ],
         ),
       ),
     );
