@@ -57,7 +57,6 @@ class _FilterButtonState extends State<FilterButton> {
           child: Center(
             child: SvgPicture.asset(
               widget.iconAsset,
-              package: widget.iconPackage,
               colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
             ),
           ),
