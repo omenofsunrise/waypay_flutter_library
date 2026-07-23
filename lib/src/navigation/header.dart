@@ -105,27 +105,30 @@ class Header extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 0.0, bottom: 5.0),
-      child: NavigationToolbar(
-        centerMiddle: true,
-        middleSpacing: 12,
-        leading: leading,
-        middle: KeyedSubtree(
-          key: titleKey,
-          child:
-              titleWidget ??
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: AppStyle.semiBold23.copyWith(
-                  fontWeight: FontWeight.w500,
+      child: SizedBox(
+        height: 50,
+        child: NavigationToolbar(
+          centerMiddle: true,
+          middleSpacing: 12,
+          leading: leading,
+          middle: KeyedSubtree(
+            key: titleKey,
+            child:
+                titleWidget ??
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: AppStyle.semiBold23.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+          ),
+          trailing: actions.isEmpty
+              ? null
+              : Row(mainAxisSize: MainAxisSize.min, children: actions),
         ),
-        trailing: actions.isEmpty
-            ? null
-            : Row(mainAxisSize: MainAxisSize.min, children: actions),
       ),
     );
   }
