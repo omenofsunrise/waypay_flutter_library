@@ -102,6 +102,7 @@ class Header extends StatelessWidget {
                   titleWidget ??
                   Text(
                     title,
+                    textAlign: TextAlign.center,
                     style: AppStyle.semiBold23.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
