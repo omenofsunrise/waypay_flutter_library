@@ -48,82 +48,84 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget leading = showBackButton
+        ? Material(
+            shape: const CircleBorder(),
+            clipBehavior: Clip.antiAlias,
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                if (onBackPressed != null) {
+                  onBackPressed!();
+                  return;
+                }
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go(fallbackRoute);
+                }
+              },
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: SvgPicture.asset(backIconAsset),
+                ),
+              ),
+            ),
+          )
+        : showAvatar
+        ? GestureDetector(
+            onTap: () {
+              if (onAvatarTap != null) {
+                onAvatarTap!();
+                return;
+              }
+              if (avatarRouteName != null) {
+                context.pushNamed(avatarRouteName!);
+              }
+            },
+            child: _buildAvatar(),
+          )
+        : const SizedBox(width: 50);
+
+    final actions = <Widget>[
+      if (showNotifications)
+        notificationsButton ??
+            IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(SvgIcons.notifications),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+            ),
+      if (trailing != null) trailing!,
+    ];
+
     return Padding(
       padding: const EdgeInsets.only(top: 0.0, bottom: 5.0),
-      child: Row(
-        children: [
-          showBackButton
-              ? Material(
-                  shape: const CircleBorder(),
-                  clipBehavior: Clip.antiAlias,
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      if (onBackPressed != null) {
-                        onBackPressed!();
-                        return;
-                      }
-                      if (context.canPop()) {
-                        context.pop();
-                      } else {
-                        context.go(fallbackRoute);
-                      }
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: SvgPicture.asset(backIconAsset),
-                      ),
-                    ),
-                  ),
-                )
-              : showAvatar
-              ? GestureDetector(
-                  onTap: () {
-                    if (onAvatarTap != null) {
-                      onAvatarTap!();
-                      return;
-                    }
-                    if (avatarRouteName != null) {
-                      context.pushNamed(avatarRouteName!);
-                    }
-                  },
-                  child: _buildAvatar(),
-                )
-              : const SizedBox(width: 10),
-          const SizedBox(width: 12),
-          Expanded(
-            child: KeyedSubtree(
-              key: titleKey,
-              child:
-                  titleWidget ??
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: AppStyle.semiBold23.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-            ),
-          ),
-          if (showNotifications) ...[
-            const SizedBox(width: 12),
-            notificationsButton ??
-                IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(SvgIcons.notifications),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+      child: NavigationToolbar(
+        centerMiddle: true,
+        middleSpacing: 12,
+        leading: leading,
+        middle: KeyedSubtree(
+          key: titleKey,
+          child:
+              titleWidget ??
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: AppStyle.semiBold23.copyWith(
+                  fontWeight: FontWeight.w500,
                 ),
-            const SizedBox(width: 3),
-          ],
-          if (trailing != null) ...[const SizedBox(width: 12), trailing!],
-        ],
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+        ),
+        trailing: actions.isEmpty
+            ? null
+            : Row(mainAxisSize: MainAxisSize.min, children: actions),
       ),
     );
   }
@@ -159,7 +161,7 @@ class Header extends StatelessWidget {
   String _getInitials(String fullName) {
     final List<String> parts = fullName
         .trim()
-        .split(RegExp(r'\\s+'))
+        .split(RegExp(r'\s+'))
         .where((String part) => part.isNotEmpty)
         .toList();
     if (parts.length >= 2) {
