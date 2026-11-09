@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:waypay_flutter_library/assets/resources.dart';
 
 import '../theme/app_colors.dart';
+import '../overlays/bottom_sheet_shell.dart';
 
 class FilterButton extends StatefulWidget {
   const FilterButton({
@@ -82,58 +83,17 @@ class FilterSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double bottomInset = MediaQuery.of(context).viewInsets.bottom;
-    final EdgeInsets sheetPadding =
-        padding ??
-        EdgeInsets.only(left: 16, right: 16, top: 24, bottom: bottomInset + 24);
-
-    final Widget header = Row(
-      children: [
-        Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-        ),
-        IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.close),
-        ),
-      ],
-    );
-
-    if (!keepHeaderPinned) {
-      return Padding(
-        padding: sheetPadding,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [header, const SizedBox(height: 16), child],
-          ),
-        ),
-      );
-    }
-
-    final double maxHeight = MediaQuery.of(context).size.height * 0.85;
-
-    return Padding(
-      padding: sheetPadding,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: maxHeight),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            header,
-            const SizedBox(height: 16),
-            Flexible(
-              fit: FlexFit.loose,
+    return WayPayBottomSheet(
+      title: title,
+      padding: padding ?? const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      child: keepHeaderPinned
+          ? ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * .7,
+              ),
               child: SingleChildScrollView(child: child),
-            ),
-          ],
-        ),
-      ),
+            )
+          : child,
     );
   }
 }

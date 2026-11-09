@@ -73,9 +73,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
 
   void _showError(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    showAppMessage(context, message, type: AppMessageType.error);
   }
 
   @override
@@ -197,7 +195,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                       ).copyWith(
                                         color: const Color(
                                           AppColors.black,
-                                        ).withOpacity(0.35),
+                                        ).withValues(alpha: 0.35),
                                       ),
                                   contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 12,
