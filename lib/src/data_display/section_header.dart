@@ -17,33 +17,48 @@ class WayPaySectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final titleContent = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: AppStyle.manrope(size: 16, weight: FontWeight.w700),
+            ),
+            if (subtitle != null) ...[
+              const SizedBox(height: 3),
+              Text(
+                subtitle!,
+                style: AppStyle.manrope(
+                  size: 13,
+                  weight: FontWeight.w400,
+                  color: const Color(AppColors.uiBorder),
+                ),
+              ),
+            ],
+          ],
+        );
+
+        if (!constraints.hasBoundedWidth) {
+          return Row(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: AppStyle.manrope(size: 16, weight: FontWeight.w700),
-              ),
-              if (subtitle != null) ...[
-                const SizedBox(height: 3),
-                Text(
-                  subtitle!,
-                  style: AppStyle.manrope(
-                    size: 13,
-                    weight: FontWeight.w400,
-                    color: const Color(AppColors.uiBorder),
-                  ),
-                ),
-              ],
+              Flexible(fit: FlexFit.loose, child: titleContent),
+              if (action != null) ...[const SizedBox(width: 12), action!],
             ],
-          ),
-        ),
-        if (action != null) ...[const SizedBox(width: 12), action!],
-      ],
+          );
+        }
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: titleContent),
+            if (action != null) ...[const SizedBox(width: 12), action!],
+          ],
+        );
+      },
     );
   }
 }
