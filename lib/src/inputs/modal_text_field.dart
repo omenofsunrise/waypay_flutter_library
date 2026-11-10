@@ -100,6 +100,8 @@ class _ModalTextFieldState extends State<ModalTextField> {
   Widget build(BuildContext context) {
     final bool hasValue = widget.controller.text.trim().isNotEmpty;
     final bool isActive = _focusNode.hasFocus || hasValue;
+    final bool useDefaultSuffixLayout =
+        widget.suffixIcon != null && widget.suffixIconConstraints == null;
     const Color inactiveColor = Color(0xFFD9DDE5);
     const Color activeColor = Color(AppColors.primary);
 
@@ -134,15 +136,15 @@ class _ModalTextFieldState extends State<ModalTextField> {
             ),
         alignLabelWithHint:
             widget.alignLabelWithHint ?? (widget.minLines != null),
-        suffixIcon: widget.suffixIcon,
+        suffixIcon: useDefaultSuffixLayout
+            ? Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Center(child: widget.suffixIcon),
+              )
+            : widget.suffixIcon,
         suffixIconConstraints:
             widget.suffixIconConstraints ??
-            const BoxConstraints(
-              minHeight: 24,
-              minWidth: 24,
-              maxHeight: 28,
-              maxWidth: 28,
-            ),
+            const BoxConstraints(minHeight: 48, minWidth: 40, maxWidth: 40),
         filled: true,
         fillColor: Colors.white,
         contentPadding: const EdgeInsets.symmetric(
