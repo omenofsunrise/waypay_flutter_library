@@ -142,11 +142,18 @@ class WayPayOperationTile extends StatelessWidget {
         title: title,
         subtitle: subtitle,
         padding: EdgeInsets.zero,
-        trailing:
-            trailing ??
-            (status == null
-                ? null
-                : WayPayStatusBadge(text: status!, tone: statusTone)),
+        trailing: status == null
+            ? trailing
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  WayPayStatusBadge(text: status!, tone: statusTone),
+                  if (trailing != null) ...[
+                    const SizedBox(width: 6),
+                    trailing!,
+                  ],
+                ],
+              ),
       ),
     );
   }

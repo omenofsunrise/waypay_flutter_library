@@ -30,17 +30,23 @@ class WayPayInfoCard extends StatelessWidget {
     required this.fields,
     this.fieldsPerRow = 1,
     this.onTap,
+    this.showShadow = true,
+    this.showBorder = false,
   }) : assert(fieldsPerRow > 0);
 
   final String? title;
   final List<WayPayInfoField> fields;
   final int fieldsPerRow;
   final VoidCallback? onTap;
+  final bool showShadow;
+  final bool showBorder;
 
   @override
   Widget build(BuildContext context) {
     return WayPaySurfaceCard(
       onTap: onTap,
+      showShadow: showShadow,
+      showBorder: showBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

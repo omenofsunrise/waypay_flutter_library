@@ -24,6 +24,7 @@ class ModalTextField extends StatefulWidget {
     this.prefix,
     this.prefixText,
     this.prefixStyle,
+    this.autofocus = false,
   });
 
   final TextEditingController controller;
@@ -44,6 +45,7 @@ class ModalTextField extends StatefulWidget {
   final Widget? prefix;
   final String? prefixText;
   final TextStyle? prefixStyle;
+  final bool autofocus;
 
   @override
   State<ModalTextField> createState() => _ModalTextFieldState();
@@ -102,13 +104,14 @@ class _ModalTextFieldState extends State<ModalTextField> {
     const Color activeColor = Color(AppColors.primary);
 
     OutlineInputBorder border(Color color) => OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: color, width: 1.5),
-        );
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: color, width: 1.5),
+    );
 
     return TextField(
       controller: widget.controller,
       focusNode: _focusNode,
+      autofocus: widget.autofocus,
       keyboardType: widget.keyboardType,
       readOnly: widget.readOnly,
       onTap: widget.onTap,
@@ -122,15 +125,18 @@ class _ModalTextFieldState extends State<ModalTextField> {
         errorText: widget.errorText,
         prefix: widget.prefix,
         prefixText: widget.prefixText,
-        prefixStyle: widget.prefixStyle ??
+        prefixStyle:
+            widget.prefixStyle ??
             const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: Color(AppColors.black),
             ),
-        alignLabelWithHint: widget.alignLabelWithHint ?? (widget.minLines != null),
+        alignLabelWithHint:
+            widget.alignLabelWithHint ?? (widget.minLines != null),
         suffixIcon: widget.suffixIcon,
-        suffixIconConstraints: widget.suffixIconConstraints ??
+        suffixIconConstraints:
+            widget.suffixIconConstraints ??
             const BoxConstraints(
               minHeight: 24,
               minWidth: 24,
