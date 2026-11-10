@@ -16,6 +16,7 @@ export 'src/inputs/custom_checkbox.dart';
 export 'src/inputs/custom_radio_button.dart';
 export 'src/inputs/toggle_switch.dart';
 export 'src/inputs/custom_calendar.dart';
+export 'src/inputs/calendar_icon.dart';
 export 'src/inputs/date_input.dart';
 export 'src/inputs/dropdown_field.dart';
 export 'src/inputs/search_field.dart';

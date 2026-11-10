@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waypay_flutter_library/waypay_styles.dart';
 
@@ -18,7 +19,7 @@ void main() {
               child: ModalTextField(
                 controller: controller,
                 label: 'Дата окончания договора',
-                suffixIcon: const Icon(Icons.calendar_today_outlined, size: 18),
+                suffixIcon: const WayPayCalendarIcon(),
               ),
             ),
           ),
@@ -27,7 +28,7 @@ void main() {
     );
 
     final fieldRect = tester.getRect(find.byType(TextField));
-    final iconRect = tester.getRect(find.byIcon(Icons.calendar_today_outlined));
+    final iconRect = tester.getRect(find.byType(SvgPicture));
 
     expect(iconRect.center.dy, closeTo(fieldRect.center.dy, 1));
     expect(fieldRect.right - iconRect.right, greaterThanOrEqualTo(12));
