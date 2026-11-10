@@ -7,10 +7,12 @@ class CustomTabSwitcher extends StatelessWidget {
     super.key,
     required this.controller,
     required this.tabs,
+    this.isScrollable = false,
   }) : assert(tabs.length > 0);
 
   final TabController controller;
   final List<String> tabs;
+  final bool isScrollable;
 
   static const Color _inactiveColor = Color(0xFFBCC1C8);
   static const Color _lineColor = Color(0xFFE5E5EA);
@@ -23,13 +25,34 @@ class CustomTabSwitcher extends StatelessWidget {
       'Tabs count must match controller length',
     );
 
+    if (isScrollable) {
+      return TabBar(
+        controller: controller,
+        isScrollable: true,
+        tabAlignment: TabAlignment.start,
+        dividerColor: _lineColor,
+        indicatorColor: const Color(AppColors.primary),
+        indicatorWeight: 2,
+        labelColor: const Color(AppColors.primary),
+        unselectedLabelColor: _inactiveColor,
+        labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        unselectedLabelStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+        tabs: tabs.map((tab) => Tab(text: tab)).toList(),
+      );
+    }
+
     return AnimatedBuilder(
       animation: controller,
       builder: (context, _) {
         final double animationValue =
             controller.animation?.value ?? controller.index.toDouble();
-        final int activeIndex =
-            animationValue.round().clamp(0, tabs.length - 1);
+        final int activeIndex = animationValue.round().clamp(
+          0,
+          tabs.length - 1,
+        );
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,8 +79,7 @@ class CustomTabSwitcher extends StatelessWidget {
                           vertical: 8,
                           horizontal: 4,
                         ),
-                        child:
-                            Text(tabs[index], textAlign: TextAlign.center),
+                        child: Text(tabs[index], textAlign: TextAlign.center),
                       ),
                     ),
                   ),
@@ -68,10 +90,13 @@ class CustomTabSwitcher extends StatelessWidget {
             LayoutBuilder(
               builder: (context, constraints) {
                 final double totalWidth = constraints.maxWidth;
-                final double indicatorWidth =
-                    tabs.isEmpty ? 0.0 : totalWidth / tabs.length;
-                final double clampedValue =
-                    animationValue.clamp(0.0, tabs.length - 1);
+                final double indicatorWidth = tabs.isEmpty
+                    ? 0.0
+                    : totalWidth / tabs.length;
+                final double clampedValue = animationValue.clamp(
+                  0.0,
+                  tabs.length - 1,
+                );
                 final double left = indicatorWidth * clampedValue;
 
                 return SizedBox(
@@ -86,8 +111,7 @@ class CustomTabSwitcher extends StatelessWidget {
                         width: indicatorWidth,
                         top: 0,
                         bottom: 0,
-                        child:
-                            Container(color: const Color(AppColors.primary)),
+                        child: Container(color: const Color(AppColors.primary)),
                       ),
                     ],
                   ),

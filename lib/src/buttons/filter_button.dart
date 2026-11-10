@@ -86,6 +86,7 @@ class FilterSheet extends StatelessWidget {
     return WayPayBottomSheet(
       title: title,
       padding: padding ?? const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      scrollable: !keepHeaderPinned,
       child: keepHeaderPinned
           ? ConstrainedBox(
               constraints: BoxConstraints(

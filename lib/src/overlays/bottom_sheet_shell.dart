@@ -13,6 +13,7 @@ class WayPayBottomSheet extends StatelessWidget {
     this.onClose,
     this.footer,
     this.padding = const EdgeInsets.fromLTRB(24, 8, 24, 24),
+    this.scrollable = true,
   });
 
   final String title;
@@ -21,6 +22,7 @@ class WayPayBottomSheet extends StatelessWidget {
   final VoidCallback? onClose;
   final Widget? footer;
   final EdgeInsetsGeometry padding;
+  final bool scrollable;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,9 @@ class WayPayBottomSheet extends StatelessWidget {
               ),
             ),
             Flexible(
-              child: SingleChildScrollView(padding: padding, child: child),
+              child: scrollable
+                  ? SingleChildScrollView(padding: padding, child: child)
+                  : Padding(padding: padding, child: child),
             ),
             if (footer != null)
               Padding(

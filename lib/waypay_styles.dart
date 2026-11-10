@@ -39,6 +39,7 @@ export 'src/data_display/section_header.dart';
 export 'src/data_display/status_badge.dart';
 
 export 'src/overlays/bottom_sheet_shell.dart';
+export 'src/overlays/action_sheet.dart';
 export 'src/overlays/waypay_modal.dart';
 
 export 'src/auth/models.dart';

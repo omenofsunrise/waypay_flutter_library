@@ -122,6 +122,7 @@ class WayPayOperationTile extends StatelessWidget {
     this.statusTone = WayPayStatusTone.info,
     this.trailing,
     this.onTap,
+    this.margin = const EdgeInsets.only(bottom: 8),
   });
 
   final String title;
@@ -130,11 +131,13 @@ class WayPayOperationTile extends StatelessWidget {
   final WayPayStatusTone statusTone;
   final Widget? trailing;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry margin;
 
   @override
   Widget build(BuildContext context) {
     return WayPaySurfaceCard(
       onTap: onTap,
+      margin: margin,
       showShadow: false,
       showBorder: true,
       padding: const EdgeInsets.all(14),
