@@ -57,21 +57,26 @@ class BottomNavBar extends StatelessWidget {
         ),
         padding: padding,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(items.length, (index) {
             final item = items[index];
             final selected = currentIndex == index;
             final iconPath = selected
                 ? (item.activeIcon ?? item.icon)
                 : item.icon;
-            return _NavItem(
-              icon: iconPath,
-              selected: selected,
-              activeColor: activeColor,
-              iconColor: iconColor,
-              itemSize: itemSize,
-              iconSize: iconSize,
-              onTap: () => onTap(index),
+            return Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                heightFactor: 1,
+                child: _NavItem(
+                  icon: iconPath,
+                  selected: selected,
+                  activeColor: activeColor,
+                  iconColor: iconColor,
+                  itemSize: itemSize,
+                  iconSize: iconSize,
+                  onTap: () => onTap(index),
+                ),
+              ),
             );
           }),
         ),
